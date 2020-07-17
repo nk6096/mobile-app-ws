@@ -16,7 +16,7 @@ import com.appsdeveloperblog.app.ws.ui.model.request.UserDetailsRequestModel;
 import com.appsdeveloperblog.app.ws.ui.model.response.UserRest;
 
 @RestController
-@RequestMapping("users") // http://localhost:8080/users
+@RequestMapping("users") // http://localhost:9080/users
 public class UserController {
 
 	@Autowired
