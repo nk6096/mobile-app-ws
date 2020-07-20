@@ -1,11 +1,15 @@
 package com.appsdeveloperblog.app.ws.io.entity;
 
-import java.io.Serializable;
+import com.appsdeveloperblog.app.ws.io.value.UserAddress;
+import org.hibernate.annotations.CollectionId;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.*;
 
 @Entity(name = "users")
 public class UserEntity implements Serializable {
@@ -27,6 +31,15 @@ public class UserEntity implements Serializable {
 
 	@Column(nullable = false, length = 120)
 	private String email;
+
+	//@Embedded
+	//private UserAddress userAddress;
+
+	//@GenericGenerator(name = "increment-gen", strategy = "increment")
+	//@CollectionId(columns = {@Column(name = "ADDRESS_ID")}, generator = "increment-gen", type = @Type(type = "long"))
+	@ElementCollection(fetch = FetchType.EAGER)
+	@JoinTable(name = "USER_ADDRESS", joinColumns=@JoinColumn(name = "USER_ID"))
+	private Collection<UserAddress> userAddressSet = new ArrayList<>();
 
 	@Column(nullable = false)
 	private String encryptedPassword;
@@ -74,6 +87,22 @@ public class UserEntity implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/*public UserAddress getUserAddress() {
+		return userAddress;
+	}
+
+	public void setUserAddress(UserAddress userAddress) {
+		this.userAddress = userAddress;
+	}*/
+
+	public Collection<UserAddress> getUserAddressSet() {
+		return userAddressSet;
+	}
+
+	public void setUserAddressSet(Collection<UserAddress> userAddressSet) {
+		this.userAddressSet = userAddressSet;
 	}
 
 	public String getEncryptedPassword() {

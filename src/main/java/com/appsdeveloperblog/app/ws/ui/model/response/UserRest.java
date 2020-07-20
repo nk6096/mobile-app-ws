@@ -1,11 +1,25 @@
 package com.appsdeveloperblog.app.ws.ui.model.response;
 
+import com.appsdeveloperblog.app.ws.io.value.UserAddress;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
 public class UserRest {
 
 	private String userId;
 	private String firstName;
 	private String lastName;
 	private String email;
+	private Collection<UserAddress> userAddressSet = new ArrayList<>();
+
+	public Collection<UserAddress> getUserAddressSet() {
+		return userAddressSet;
+	}
+
+	public void setUserAddressSet(Collection<UserAddress> userAddressSet) {
+		this.userAddressSet = userAddressSet;
+	}
 
 	public String getUserId() {
 		return userId;

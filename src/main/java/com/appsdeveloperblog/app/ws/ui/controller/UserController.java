@@ -23,8 +23,13 @@ public class UserController {
 	UserService userService;
 
 	@GetMapping
-	public String getUser() {
-		return "get user was called";
+	public UserRest getUser() {
+		UserRest returnUser = new UserRest();
+
+		UserDto getUser = userService.getUserById("nk6096@gmail.com");
+		BeanUtils.copyProperties(getUser, returnUser);
+
+		return returnUser;
 	}
 
 	@PostMapping

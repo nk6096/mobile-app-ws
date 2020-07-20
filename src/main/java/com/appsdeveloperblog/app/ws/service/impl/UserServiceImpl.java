@@ -2,6 +2,8 @@ package com.appsdeveloperblog.app.ws.service.impl;
 
 import java.util.ArrayList;
 
+import com.appsdeveloperblog.app.ws.io.value.UserAddress;
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -29,6 +31,16 @@ public class UserServiceImpl implements UserService {
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	@Override
+	public UserDto getUserById(String email) {
+		UserDto returnValue = new UserDto();
+
+		UserEntity userEntity = userRepository.findByEmail(email);
+		BeanUtils.copyProperties(userEntity, returnValue);
+
+		return returnValue;
+	}
+
+	@Override
 	public UserDto createUser(UserDto user) {
 
 		if (userRepository.findByEmail(user.getEmail()) != null)
@@ -41,6 +53,24 @@ public class UserServiceImpl implements UserService {
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
+		UserAddress userAddress = new UserAddress();
+		userAddress.setStreet("07 street");
+		userAddress.setCity("Delhi");
+		userAddress.setState("New Delhi");
+		userAddress.setPinCode("110096");
+		userAddress.setCountry("India");
+
+		UserAddress userAddress1 = new UserAddress();
+		userAddress1.setStreet("07 street");
+		userAddress1.setCity("Delhi");
+		userAddress1.setState("New Delhi");
+		userAddress1.setPinCode("110096");
+		userAddress1.setCountry("India");
+
+		userEntity.getUserAddressSet().add(userAddress);
+		userEntity.getUserAddressSet().add(userAddress1);
+
+		//userEntity.setUserAddress(userAddress);
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
 		UserDto returnValue = new UserDto();

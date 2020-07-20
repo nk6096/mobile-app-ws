@@ -1,6 +1,10 @@
 package com.appsdeveloperblog.app.ws.shared.dto;
 
+import com.appsdeveloperblog.app.ws.io.value.UserAddress;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class UserDto implements Serializable {
 
@@ -14,6 +18,15 @@ public class UserDto implements Serializable {
 	private String encryptedPassword;
 	private String emailVerificationToken;
 	private Boolean emailVerificationStatus = false;
+	private Collection<UserAddress> userAddressSet = new ArrayList<>();
+
+	public Collection<UserAddress> getUserAddressSet() {
+		return userAddressSet;
+	}
+
+	public void setUserAddressSet(Collection<UserAddress> userAddressSet) {
+		this.userAddressSet = userAddressSet;
+	}
 
 	public long getId() {
 		return id;
