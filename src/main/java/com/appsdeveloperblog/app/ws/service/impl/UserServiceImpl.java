@@ -2,6 +2,10 @@ package com.appsdeveloperblog.app.ws.service.impl;
 
 import java.util.ArrayList;
 
+import com.appsdeveloperblog.app.ws.io.entity.CompanyEntity;
+import com.appsdeveloperblog.app.ws.io.entity.VehicleEntity;
+import com.appsdeveloperblog.app.ws.io.repository.CompanyRepository;
+import com.appsdeveloperblog.app.ws.io.repository.VehicleRepository;
 import com.appsdeveloperblog.app.ws.io.value.UserAddress;
 import com.fasterxml.jackson.databind.util.BeanUtil;
 import org.springframework.beans.BeanUtils;
@@ -23,6 +27,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	VehicleRepository vehicleRepository;
+
+	@Autowired
+	CompanyRepository companyRepository;
 
 	@Autowired
 	Utils utils;
@@ -70,7 +80,27 @@ public class UserServiceImpl implements UserService {
 		userEntity.getUserAddressSet().add(userAddress);
 		userEntity.getUserAddressSet().add(userAddress1);
 
+		VehicleEntity vehicleEntity = new VehicleEntity();
+		vehicleEntity.setVehicleName("VW Skoda Octavia");
+
+		userEntity.setVehicleEntity(vehicleEntity);
+
+		CompanyEntity companyEntity = new CompanyEntity();
+		companyEntity.setCompanyName("VWITS");
+		companyEntity.setCompanyAddress("India");
+		CompanyEntity companyEntity1 = new CompanyEntity();
+		companyEntity1.setCompanyName("VWSA");
+		companyEntity1.setCompanyAddress("South Africa");
+
+		userEntity.getCompanyEntity().add(companyEntity);
+		userEntity.getCompanyEntity().add(companyEntity1);
+		//companyEntity.setUserEntity(userEntity);
+		//companyEntity1.setUserEntity(userEntity);
+
 		//userEntity.setUserAddress(userAddress);
+		vehicleRepository.save(vehicleEntity);
+		companyRepository.save(companyEntity);
+		companyRepository.save(companyEntity1);
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
 		UserDto returnValue = new UserDto();

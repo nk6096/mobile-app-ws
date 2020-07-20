@@ -49,6 +49,14 @@ public class UserEntity implements Serializable {
 	@Column(nullable = false)
 	private Boolean emailVerificationTokenStatus = false;
 
+	@OneToOne
+	@JoinColumn(name = "VEHICLE_ID")
+	private VehicleEntity vehicleEntity;
+
+	@OneToMany
+	@JoinTable(name = "USER_COMPANY", joinColumns = @JoinColumn(name = "COMPANY_ID"), inverseJoinColumns = @JoinColumn(name = "COMP_ID"))
+	private Collection<CompanyEntity> companyEntity = new ArrayList<CompanyEntity>();
+
 	public long getId() {
 		return id;
 	}
@@ -129,4 +137,19 @@ public class UserEntity implements Serializable {
 		this.emailVerificationTokenStatus = emailVerificationTokenStatus;
 	}
 
+	public VehicleEntity getVehicleEntity() {
+		return vehicleEntity;
+	}
+
+	public void setVehicleEntity(VehicleEntity vehicleEntity) {
+		this.vehicleEntity = vehicleEntity;
+	}
+
+	public Collection<CompanyEntity> getCompanyEntity() {
+		return companyEntity;
+	}
+
+	public void setCompanyEntity(Collection<CompanyEntity> companyEntity) {
+		this.companyEntity = companyEntity;
+	}
 }
